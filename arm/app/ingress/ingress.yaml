@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: app-nextcloud-ingress
+  namespace: app-nextcloud
+spec:
+  tls:
+  - hosts:
+    - storage.gwcloud.tk
+    secretName: ingress-secret
+#    - storage.gwcloud.tk
+  rules:
+  - host: storage.gwcloud.tk
+    http:
+      paths:
+      - backend:
+          serviceName: nextcloud
+          servicePort: 80
+

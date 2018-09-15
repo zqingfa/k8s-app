@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextcloud
+  namespace: app-nextcloud
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: nextcloud
+  type: NodePort
+
+
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: nextcloud
+  namespace: app-nextcloud
+spec:
+  selector:
+    matchLabels:
+      app: nextcloud
+  template:
+    metadata:
+      labels:
+        app: nextcloud
+    spec:
+      containers:
+      - image: arm64v8/nextcloud:13
+        name: nextcloud
+#        env:
+#        - name: MYSQL_ROOT_PASSWORD
+#          value: password
+        ports:
+        - containerPort: 80
+          name: nextcloud
+        volumeMounts:
+        - name: nextcloud-persistent-storage
+          mountPath: /var/www/html
+      volumes:
+      - name: nextcloud-persistent-storage
+        persistentVolumeClaim:
+          claimName: nextcloud-pvc 
+
