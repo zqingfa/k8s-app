@@ -13,16 +13,3 @@ spec:
   nfs:
     path: /data/nfsdata/wordpress/wordpress
     server: k8s-node2
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: wordpress-pvc
-  namespace: app-wordpress
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 20Gi
-  storageClassName: nfs

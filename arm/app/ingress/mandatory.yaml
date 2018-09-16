@@ -1,3 +1,4 @@
+#修改kubernetes.io/hostname: k8s-node4为需要调度的主机名
 ---
 
 apiVersion: v1

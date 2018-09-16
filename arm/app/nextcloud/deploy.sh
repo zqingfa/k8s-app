@@ -5,7 +5,6 @@ appName=$1
 appAddress=$2
 servicePort=$3
 
-
 #创建证书
 kubectl create secret tls ingress-secret --namespace=app-${appName} --key ingress.key --cert ingress.pem
 #创建HTTPs的ingress解析，$1为应用名，$2为域名地址
@@ -29,4 +28,4 @@ spec:
           serviceName: $1
           servicePort: ${servicePort}
 EOF
-bash ingress.yaml
+kubectl apply -f ingress.yaml

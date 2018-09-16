@@ -1,3 +1,17 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nextcloud-pvc
+  namespace: app-nextcloud
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: nfs
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -9,8 +23,6 @@ spec:
   selector:
     app: nextcloud
   type: NodePort
-
-
 ---
 apiVersion: apps/v1beta1
 kind: Deployment

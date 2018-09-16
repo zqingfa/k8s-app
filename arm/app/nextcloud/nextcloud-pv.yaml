@@ -13,16 +13,3 @@ spec:
   nfs:
     path: /data/nfsdata/nextcloud/nextcloud
     server: k8s-node2
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: nextcloud-pvc
-  namespace: app-nextcloud
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 20Gi
-  storageClassName: nfs
