@@ -46,7 +46,7 @@ spec:
         name: iomsums
         env:
         - name: SPRING_PROFILES_ACTIVE
-          value: dev
+          value: test
         ports:
         - containerPort: 8081
           name: iomsums

@@ -46,7 +46,7 @@ spec:
         name: iomsmq
         env:
         - name: SPRING_PROFILES_ACTIVE
-          value: dev
+          value: test
         ports:
         - containerPort: 8083
           name: iomsmq

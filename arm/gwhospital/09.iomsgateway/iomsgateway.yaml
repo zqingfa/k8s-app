@@ -46,7 +46,7 @@ spec:
         name: iomsgateway
         env:
         - name: SPRING_PROFILES_ACTIVE
-          value: dev
+          value: test
         ports:
         - containerPort: 8099
           name: iomsgateway

@@ -46,7 +46,7 @@ spec:
         name: iomsmonitor
         env:
         - name: SPRING_PROFILES_ACTIVE
-          value: dev
+          value: test
         ports:
         - containerPort: 8084
           name: iomsmonitor
