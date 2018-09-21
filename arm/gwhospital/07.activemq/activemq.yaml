@@ -1,15 +1,18 @@
-# kind: PersistentVolumeClaim
-# apiVersion: v1
-# metadata:
-#   name: activemq-pvc
-#   namespace: gwhospital
-# spec:
-#   accessModes:
-#   - ReadWriteMany
-#   resources:
-#     requests:
-#       storage: 20Gi
-#   storageClassName: nfs
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: activemq-pvc
+  namespace: gwhospital
+spec:
+  accessModes:
+  - ReadWriteMany
+  selector:
+    matchLabels:
+      pv: activemq-pv
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: nfs
 
 ---
 apiVersion: v1

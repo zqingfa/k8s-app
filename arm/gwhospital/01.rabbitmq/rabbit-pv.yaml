@@ -3,6 +3,8 @@ kind: PersistentVolume
 metadata:
   name: rabbitmq-pv
   namespace: gwhospital
+  labels:
+    pv: rabbitmq-pv
 spec:
   accessModes:
   - ReadWriteMany

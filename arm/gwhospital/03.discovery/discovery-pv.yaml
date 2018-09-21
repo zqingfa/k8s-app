@@ -3,6 +3,8 @@ kind: PersistentVolume
 metadata:
   name: discovery-pv
   namespace: gwhospital
+  labels:
+    pv: discovery-pv
 spec:
   accessModes:
   - ReadWriteMany

@@ -3,6 +3,8 @@ kind: PersistentVolume
 metadata:
   name: fastdfs-pv
   namespace: gwhospital
+  labels:
+    pv: fastdfs-pv
 spec:
   accessModes:
   - ReadWriteMany

@@ -6,6 +6,9 @@ metadata:
 spec:
   accessModes:
   - ReadWriteMany
+  selector:
+    matchLabels:
+      pv: fastdfs-pv
   resources:
     requests:
       storage: 50Gi

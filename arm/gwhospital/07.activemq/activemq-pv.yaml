@@ -1,15 +1,17 @@
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: activemq-pv
-#   namespace: gwhospital
-# spec:
-#   accessModes:
-#   - ReadWriteMany
-#   capacity:
-#     storage: 20Gi
-#   persistentVolumeReclaimPolicy: Retain
-#   storageClassName: nfs
-#   nfs:
-#     path: /data/gwhospital/07activemq/activemq
-#     server: k8s-node3
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: activemq-pv
+  namespace: gwhospital
+  labels:
+    pv: activemq-pv
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 20Gi
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs
+  nfs:
+    path: /data/gwhospital/07activemq/activemq
+    server: k8s-node3

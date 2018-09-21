@@ -3,6 +3,8 @@ kind: PersistentVolume
 metadata:
   name: iomsums-pv
   namespace: gwhospital
+  labels:
+    pv: iomsums-pv
 spec:
   accessModes:
   - ReadWriteMany

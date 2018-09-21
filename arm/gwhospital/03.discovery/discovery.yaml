@@ -6,6 +6,9 @@ metadata:
 spec:
   accessModes:
   - ReadWriteMany
+  selector:
+    matchLabels:
+      pv: discovery-pv
   resources:
     requests:
       storage: 20Gi

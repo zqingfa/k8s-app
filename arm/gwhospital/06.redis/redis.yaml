@@ -6,6 +6,9 @@ metadata:
 spec:
   accessModes:
   - ReadWriteMany
+  selector:
+    matchLabels:
+      pv: redis-pv
   resources:
     requests:
       storage: 20Gi
