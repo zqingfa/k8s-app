@@ -1,0 +1,71 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: ui-pvc
+  namespace: gwhospital
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: nfs
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ui
+  namespace: gwhospital
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    name: ui
+  selector:
+    app: ui
+  type: NodePort
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: ui
+  namespace: gwhospital
+spec:
+  selector:
+    matchLabels:
+      app: ui
+  template:
+    metadata:
+      labels:
+        app: ui
+    spec:
+      containers:
+      - image: ui:1.0
+        name: ui
+        env:
+        - name: SERVER
+          value: "119.18.192.156"
+        ports:
+        - containerPort: 80
+          name: ui
+        volumeMounts:
+        - name: ui-workdir
+          mountPath: /usr/share/nginx/www
+        - name: ui-localtime
+          mountPath: /etc/localtime
+          readOnly: true
+        - name: ui-timezone
+          mountPath: /etc/timezone     
+          readOnly: true
+      volumes:
+      - hostPath:
+          path: /etc/localtime
+        name: ui-localtime
+      - hostPath:
+          path: /etc/timezone
+        name: ui-timezone
+      - name: ui-workdir
+        persistentVolumeClaim:
+          claimName: ui-pvc
+

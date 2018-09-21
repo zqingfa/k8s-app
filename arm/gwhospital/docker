@@ -1,0 +1,27 @@
+docker run -d --name rabbitMQ -p 5672:5672 -p 15672:15672 -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro --restart=always rabbit:1.0
+docker run --name svn --detach -v /home/ioms/soft/svn:/var/opt/svn  -p 3690:3690 --restart=always garethflowers/svn-server
+docker run -d --name discovery -p 8788:8788 -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro  --restart=always discovery:1.5
+docker run -d  --name config --link discovery:eureka-server  -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro  --restart=always config:1.4.0.3
+docker run -d --name fastdfs -p 22122:22122 -v /home/ioms/fast-data/tracker:/fastdfs/tracker -v /home/ioms/fast-data/storage:/fastdfs/storage -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro --restart=always fastdfs:latest
+docker run -d --name redis -p 6379:6379 -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro  --restart=always redis:3.2.9
+docker run --name activemq -p 61618:61616 -p 8163:8161 -e ACTIVEMQ_ADMIN_LOGIN=admin -e ACTIVEMQ_ADMIN_PASSWORD=iomsserver --restart=always -d webcenter/activemq
+docker run -d -p 3306:3306 --name mysql  -e MYSQL_ROOT_PASSWORD=123456 -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro  --restart=always mysql:5.6
+docker run -d  --name iomsgateway -p 28080:8099 --link discovery:eureka-server  -e "SPRING_PROFILES_ACTIVE=dev"  -v /home/ioms/ioms-logs/gateway/logs:/data/logs  -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro  gateway:1.4.0.3
+docker run -d --name iomsums --link discovery:eureka-server -e "SPRING_PROFILES_ACTIVE=dev" -v /home/ioms/ioms-logs/ums/logs:/data/logs -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro ums:1.4.0.3
+docker run -d --name iomsmonitor --link discovery:eureka-server -e "SPRING_PROFILES_ACTIVE=dev"  -v /home/ioms/ioms-logs/monitor/logs:/data/logs  -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro monitor:1.4.0.3
+docker run -d --name iomsmq --link discovery:eureka-server -e "SPRING_PROFILES_ACTIVE=dev" -v /home/ioms/ioms-logs/mq/logs:/data/logs  -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro mq:1.4.0.3
+docker run --name weixinH5 -e SERVER={内部服务器地址} -d -p {映射端口}：80 ui:{版本号}
+
+
+
+
+
+8:
+创建数据库
+CREATE DATABASE   IF NOT EXISTS `o2o_ioms `  DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+创建运维的专用用户
+CREATE USER gwi;
+授权
+GRANT ALL ON o2o_ioms.* to gwi@'%' identified by '123456';
+刷新
+flush privileges;

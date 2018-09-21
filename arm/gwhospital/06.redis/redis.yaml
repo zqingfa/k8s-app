@@ -1,0 +1,68 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: redis-pvc
+  namespace: gwhospital
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: nfs
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: gwhospital
+spec:
+  ports:
+  - port: 6379
+    targetPort: 6379
+    name: redis
+  selector:
+    app: redis
+  type: NodePort
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: gwhospital
+spec:
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - image: arm/ioms/redis:3.0.6
+        name: redis
+        ports:
+        - containerPort: 6379
+          name: redis
+        volumeMounts:
+        # - name: redis-workdir
+        #   mountPath: /var/lib/redis
+        - name: redis-localtime
+          mountPath: /etc/localtime
+          readOnly: true
+        - name: redis-timezone
+          mountPath: /etc/timezone     
+          readOnly: true
+      volumes:
+      - hostPath:
+          path: /etc/localtime
+        name: redis-localtime
+      - hostPath:
+          path: /etc/timezone
+        name: redis-timezone
+      # - name: redis-workdir
+      #   persistentVolumeClaim:
+      #     claimName: redis-pvc
+

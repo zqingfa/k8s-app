@@ -1,0 +1,78 @@
+# kind: PersistentVolumeClaim
+# apiVersion: v1
+# metadata:
+#   name: activemq-pvc
+#   namespace: gwhospital
+# spec:
+#   accessModes:
+#   - ReadWriteMany
+#   resources:
+#     requests:
+#       storage: 20Gi
+#   storageClassName: nfs
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: activemq
+  namespace: gwhospital
+spec:
+  ports:
+  - port: 61618
+    targetPort: 61616
+    name: activemq
+  - port: 8163
+    targetPort: 8161
+    name: activemq1
+  selector:
+    app: activemq
+  type: NodePort
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: activemq
+  namespace: gwhospital
+spec:
+  selector:
+    matchLabels:
+      app: activemq
+  template:
+    metadata:
+      labels:
+        app: activemq
+    spec:
+      containers:
+      - image: arm/ioms/activemq:5.14.3
+        name: activemq
+        env:
+        - name: ACTIVEMQ_ADMIN_LOGIN
+          value: admin
+        - name: ACTIVEMQ_ADMIN_PASSWORD
+          value: iomsserver
+        ports:
+        - containerPort: 61616
+          name: activemq
+        - containerPort: 8161
+          name: activemq1
+        volumeMounts:
+        # - name: activemq-workdir
+        #   mountPath: /var/lib/activemq
+        - name: activemq-localtime
+          mountPath: /etc/localtime
+          readOnly: true
+        - name: activemq-timezone
+          mountPath: /etc/timezone     
+          readOnly: true
+      volumes:
+      - hostPath:
+          path: /etc/localtime
+        name: activemq-localtime
+      - hostPath:
+          path: /etc/timezone
+        name: activemq-timezone
+      # - name: activemq-workdir
+      #   persistentVolumeClaim:
+      #     claimName: activemq-pvc
+

@@ -1,0 +1,68 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: fastdfs-pvc
+  namespace: gwhospital
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: nfs
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastdfs
+  namespace: gwhospital
+spec:
+  ports:
+  - port: 22122
+    targetPort: 22122
+    name: fastdfs
+  selector:
+    app: fastdfs
+  type: NodePort
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: fastdfs
+  namespace: gwhospital
+spec:
+  selector:
+    matchLabels:
+      app: fastdfs
+  template:
+    metadata:
+      labels:
+        app: fastdfs
+    spec:
+      containers:
+      - image: kylin_base_fastdfs:5.11.4
+        name: fastdfs
+        ports:
+        - containerPort: 22122
+          name: fastdfs
+        volumeMounts:
+        - name: fastdfs-workdir
+          mountPath: /fastdfs
+        - name: fastdfs-localtime
+          mountPath: /etc/localtime
+          readOnly: true
+        - name: fastdfs-timezone
+          mountPath: /etc/timezone     
+          readOnly: true
+      volumes:
+      - hostPath:
+          path: /etc/localtime
+        name: fastdfs-localtime
+      - hostPath:
+          path: /etc/timezone
+        name: fastdfs-timezone
+      - name: fastdfs-workdir
+        persistentVolumeClaim:
+          claimName: fastdfs-pvc
+

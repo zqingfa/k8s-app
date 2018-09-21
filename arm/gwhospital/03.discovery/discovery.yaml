@@ -1,0 +1,67 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: discovery-pvc
+  namespace: gwhospital
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: nfs
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka-server
+  namespace: gwhospital
+spec:
+  ports:
+  - port: 8788
+    targetPort: 8788
+    name: discovery
+  selector:
+    app: discovery
+  type: NodePort
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: discovery
+  namespace: gwhospital
+spec:
+  selector:
+    matchLabels:
+      app: discovery
+  template:
+    metadata:
+      labels:
+        app: discovery
+    spec:
+      containers:
+      - image: discovery:1.5
+        name: discovery
+        ports:
+        - containerPort: 8788
+          name: discovery
+        volumeMounts:
+        - name: discovery-workdir
+          mountPath: /data
+        - name: discovery-localtime
+          mountPath: /etc/localtime
+          readOnly: true
+        - name: discovery-timezone
+          mountPath: /etc/timezone     
+          readOnly: true
+      volumes:
+      - hostPath:
+          path: /etc/localtime
+        name: discovery-localtime
+      - hostPath:
+          path: /etc/timezone
+        name: discovery-timezone
+      - name: discovery-workdir
+        persistentVolumeClaim:
+          claimName: discovery-pvc

@@ -1,0 +1,54 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: svn-pvc
+  namespace: gwhospital
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: nfs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svn
+  namespace: gwhospital
+spec:
+  ports:
+  - port: 3690
+    targetPort: 3690
+    name: svn
+  selector:
+    app: svn
+  type: NodePort
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: svn
+  namespace: gwhospital
+spec:
+  selector:
+    matchLabels:
+      app: svn
+  template:
+    metadata:
+      labels:
+        app: svn
+    spec:
+      containers:
+      - image: arm/ioms/svn:1.9.3
+        name: svn
+        ports:
+        - containerPort: 3690
+          name: svn
+        volumeMounts:
+        - name: svn-data
+          mountPath: /var/opt/svn
+      volumes:
+      - name: svn-data
+        persistentVolumeClaim:
+          claimName: svn-pvc

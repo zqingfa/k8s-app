@@ -1,0 +1,73 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: rabbitmq-pvc
+  namespace: gwhospital
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: nfs
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+  namespace: gwhospital
+spec:
+  ports:
+  - port: 5672
+    targetPort: 5672
+    name: rabbitmq
+  - port: 15672
+    targetPort: 15672
+    name: rabbitmq1
+  selector:
+    app: rabbitmq
+  type: NodePort
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: rabbitmq
+  namespace: gwhospital
+spec:
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+      - image: arm/ioms/rabbitmq:3.5.7
+        name: rabbitmq
+        ports:
+        - containerPort: 5672
+          name: rabbitmq
+        - containerPort: 15672
+          name: rabbitmq1
+        volumeMounts:
+        - name: rabbitmq-workdir
+          mountPath: /var/lib/rabbitmq
+        - name: rabbitmq-localtime
+          mountPath: /etc/localtime
+          readOnly: true
+        - name: rabbitmq-timezone
+          mountPath: /etc/timezone     
+          readOnly: true
+      volumes:
+      - hostPath:
+          path: /etc/localtime
+        name: rabbitmq-localtime
+      - hostPath:
+          path: /etc/timezone
+        name: rabbitmq-timezone
+      - name: rabbitmq-workdir
+        persistentVolumeClaim:
+          claimName: rabbitmq-pvc
+

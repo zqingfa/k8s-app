@@ -1,0 +1,68 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: config-pvc
+  namespace: gwhospital
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: nfs
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config
+  namespace: gwhospital
+spec:
+  ports:
+  - port: 7001
+    targetPort: 7001
+    name: config
+  selector:
+    app: config
+  type: ClusterIP
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: config
+  namespace: gwhospital
+spec:
+  selector:
+    matchLabels:
+      app: config
+  template:
+    metadata:
+      labels:
+        app: config
+    spec:
+      containers:
+      - image: config:1.0
+        name: config
+        ports:
+        - containerPort: 7001
+          name: config
+        volumeMounts:
+        - name: config-workdir
+          mountPath: /data
+        - name: config-localtime
+          mountPath: /etc/localtime
+          readOnly: true
+        - name: config-timezone
+          mountPath: /etc/timezone     
+          readOnly: true
+      volumes:
+      - hostPath:
+          path: /etc/localtime
+        name: config-localtime
+      - hostPath:
+          path: /etc/timezone
+        name: config-timezone
+      - name: config-workdir
+        persistentVolumeClaim:
+          claimName: config-pvc
+

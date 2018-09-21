@@ -1,0 +1,72 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: iomsmonitor-pvc
+  namespace: gwhospital
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: nfs
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iomsmonitor
+  namespace: gwhospital
+spec:
+  ports:
+  - port: 8084
+    targetPort: 8084
+    name: iomsmonitor
+  selector:
+    app: iomsmonitor
+  type: NodePort
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: iomsmonitor
+  namespace: gwhospital
+spec:
+  selector:
+    matchLabels:
+      app: iomsmonitor
+  template:
+    metadata:
+      labels:
+        app: iomsmonitor
+    spec:
+      containers:
+      
+      - image: monitor:2.0.0.3
+        name: iomsmonitor
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: dev
+        ports:
+        - containerPort: 8084
+          name: iomsmonitor
+        volumeMounts:
+        - name: iomsmonitor-workdir
+          mountPath: /data
+        - name: iomsmonitor-localtime
+          mountPath: /etc/localtime
+          readOnly: true
+        - name: iomsmonitor-timezone
+          mountPath: /etc/timezone     
+          readOnly: true
+      volumes:
+      - hostPath:
+          path: /etc/localtime
+        name: iomsmonitor-localtime
+      - hostPath:
+          path: /etc/timezone
+        name: iomsmonitor-timezone
+      - name: iomsmonitor-workdir
+        persistentVolumeClaim:
+          claimName: iomsmonitor-pvc
+
