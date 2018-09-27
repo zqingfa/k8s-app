@@ -1,15 +1,22 @@
+# ceph
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: wordpress-pv
   namespace: app-wordpress
+  labels:
+    pv: wordpress-pv  
 spec:
-  accessModes:
-  - ReadWriteOnce
   capacity:
     storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  cephfs:
+    monitors:
+      - 172.16.16.10
+    path: /app-wordpress/wordpress
+    user: admin
+    secretRef:
+      name: ceph-secret
+    readOnly: false
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: nfs
-  nfs:
-    path: /data/nfsdata/wordpress/wordpress
-    server: k8s-node2

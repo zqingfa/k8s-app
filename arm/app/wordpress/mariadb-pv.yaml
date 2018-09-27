@@ -1,15 +1,22 @@
+#ceph
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: mariadb-pv
   namespace: app-wordpress
+  labels:
+    pv: mariadb-pv  
 spec:
-  accessModes:
-  - ReadWriteOnce
   capacity:
     storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  cephfs:
+    monitors:
+      - 172.16.16.10
+    path: /app-wordpress/mariadb
+    user: admin
+    secretRef:
+      name: ceph-secret
+    readOnly: false
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: nfs
-  nfs:
-    path: /data/nfsdata/wordpress/mariadb
-    server: k8s-node2

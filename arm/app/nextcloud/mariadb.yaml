@@ -2,21 +2,23 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: mariadb-pvc
-  namespace: app-nextcloud
+  namespace: app-storage
 spec:
+  selector:
+    matchLabels:
+      app-storage: mariadb-pv 
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
       storage: 20Gi
-  storageClassName: nfs
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
   name: mariadb
-  namespace: app-nextcloud
+  namespace: app-storage
 spec:
   ports:
   - port: 3306
@@ -28,7 +30,7 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: mariadb
-  namespace: app-nextcloud
+  namespace: app-storage
 spec:
   selector:
     matchLabels:
