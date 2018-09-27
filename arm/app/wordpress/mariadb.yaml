@@ -4,12 +4,15 @@ metadata:
   name: mariadb-pvc
   namespace: app-wordpress
 spec:
+  selector:
+    matchLabels:
+      pv: mariadb-pv
   accessModes:
-  - ReadWriteMany
+    - ReadWriteMany
   resources:
     requests:
       storage: 20Gi
-  storageClassName: nfs
+
 ---
 apiVersion: v1
 kind: Service

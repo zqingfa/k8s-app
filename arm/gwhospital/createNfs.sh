@@ -12,3 +12,5 @@ mkdir -p /data/gwhospital/10iomsums/data
 mkdir -p /data/gwhospital/11iomsmonitor/data
 mkdir -p /data/gwhospital/12iomsmq/data
 mkdir -p /data/gwhospital/13ui/www
+
+chmod 777 -R /data/gwhospital

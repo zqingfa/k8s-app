@@ -1,0 +1,79 @@
+monitor-name=test
+### jdbc     ####
+jdbc.driverClassName=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://mysql:3306/o2o_ioms?useUnicode=true&characterEncoding=utf-8
+jdbc.username=gwi
+jdbc.password=123456
+
+##终端故障状态检查
+terfault.check.scheduling=0/10 * * * * ?
+
+### redis配置 ###
+redis.ip=redis
+redis.port=6379
+redis.requirepass=123456
+redis.database=0
+redis.refresh.scheduling=0 0 2 * * ?
+redis.synchronize.scheduling=0/30 * * * * ?
+#将本地缓存终端状态时间定时同步到redis#
+redis.sync.localtoredis.interval=0 0/3 * * * ?
+
+### quartz配置 ###
+org.quartz.dataSource.myDS.driver = com.mysql.jdbc.Driver
+org.quartz.dataSource.myDS.URL = jdbc:mysql://mysql:3306/o2o_ioms?useUnicode=true&characterEncoding=utf-8
+org.quartz.dataSource.myDS.user =gwi
+org.quartz.dataSource.myDS.password =123456
+org.quartz.dataSource.myDS.maxConnections = 5
+org.quartz.dataSource.myDS.validationQuery = select 1
+
+
+### rabbitMq ##
+spring.rabbitmq.host=rabbitmq
+spring.rabbitmq.port=5672
+spring.rabbitmq.username=smartops
+spring.rabbitmq.password=greatwall
+
+#版本批次下发超时时间，单位为分钟，默认为2880.
+versionBatch.overtimeWithMinute=5
+#用于测试，测试通过后删除（包括修改的代码）-版本失败率告警定时任务中设置禁止更新后的等待时间（毫秒）
+versionBatch.InsertAlarmUpdateFailRateChangeLimitSleepTime=10000
+
+#是否开启硬件告警记录
+hardware.alarm.record.start=true
+#hardware.alarm.record.start=false
+#实时检测告警调度间隔时间(秒)，备注：60秒以内，则间隔为秒，大于60秒，则取整数分钟，例如300秒=5分钟
+alarm.job.interval.time=300
+## 远程打印日志 ##
+logstash.remote.addr=192.168.35.112:4569
+
+#告警通知
+alarm.notify.scheduling=0 0/1 * * * ?
+alarm.notify.sms.scheduling=0 0/5 * * * ?
+#开发公众号
+alarm.notify.template.id=PY6EaaxFJF4aVwNSeRg3peNQ7O9ZgdbwkVJLfvY2L7Q
+alarm.notify.wechat.appid=wxec754c28c2bffaae
+alarm.notify.wechat.appsec=9aa09c31e17854a80f03b688d876b2dc
+
+#测试公众号
+#alarm.notify.wechat.appid=wx3aa4c737a9a6c045
+#alarm.notify.wechat.appsec=6a30e1729365eba6a2b84b6b2a21c810
+#alarm.notify.template.id=WeWyW1ragefp1gkPmFozTh7mvRCI-JZdpiDh4Sy9aEs
+
+alarm.notify.sms.SN=SDK-CQX-010-00309
+alarm.notify.sms.PWD=661870
+#发送短信间隔时间#
+alarm.notify.sms.interval=7200
+##短信发送 true：打开   false：关闭
+alarm.notify.sms.open=true
+
+### email config ###
+spring.mail.host=smtp.163.com
+spring.mail.username=guotao2358
+spring.mail.password=gwi123456
+spring.mail.port=25
+spring.mail.defaul.from=guotao2358@163.com
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.timeout=3000
+
+##单元测试
+ums.controller.test.url=

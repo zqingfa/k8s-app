@@ -2,56 +2,58 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: nextcloud-pvc
-  namespace: app-nextcloud
+  name: storage-pvc
+  namespace: app-storage
 spec:
+  selector:
+    matchLabels:
+      app-storage: storage-pv
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
-      storage: 20Gi
-  storageClassName: nfs
+      storage: 512Gi
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nextcloud
-  namespace: app-nextcloud
+  name: storage
+  namespace: app-storage
 spec:
   ports:
   - port: 80
   selector:
-    app: nextcloud
+    app: storage
   type: NodePort
 ---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: nextcloud
-  namespace: app-nextcloud
+  name: storage
+  namespace: app-storage
 spec:
   selector:
     matchLabels:
-      app: nextcloud
+      app: storage
   template:
     metadata:
       labels:
-        app: nextcloud
+        app: storage
     spec:
       containers:
       - image: arm64v8/nextcloud:13
-        name: nextcloud
+        name: storage
 #        env:
 #        - name: MYSQL_ROOT_PASSWORD
 #          value: password
         ports:
         - containerPort: 80
-          name: nextcloud
+          name: storage
         volumeMounts:
-        - name: nextcloud-persistent-storage
+        - name: storage-persistent-storage
           mountPath: /var/www/html
       volumes:
-      - name: nextcloud-persistent-storage
+      - name: storage-persistent-storage
         persistentVolumeClaim:
-          claimName: nextcloud-pvc 
+          claimName: storage-pvc 
 

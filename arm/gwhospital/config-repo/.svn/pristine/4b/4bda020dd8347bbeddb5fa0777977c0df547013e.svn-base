@@ -1,0 +1,101 @@
+### rabbitMq ###
+spring.rabbitmq.host=rabbitmq
+spring.rabbitmq.port=5672
+spring.rabbitmq.username=smartops
+spring.rabbitmq.password=greatwall
+
+## 是否开启模板缓存 ##
+spring.thymeleaf.cache=true  
+spring.http.multipart.maxFileSize=1024MB
+spring.http.multipart.maxRequestSize=1024MB
+
+## xss 白名单列表 ###
+xss.whitelist=/login,/proxy/rpt/upload
+
+#文件接收临时文件夹
+#ioms.file.receive.temp.dir = /res/receive/temp
+ioms.file.receive.temp.dir = static/file/temp/
+#多少天之前的临时文件可以删除（0，表示可以删除今天的；1，表示可以删除昨天的。默认为5）
+ioms.clear.tempFile.interval = 5
+#定时删除临时文件时间设置
+scheduling.deleteTempFile=0 0 2 * * ?
+
+
+### JMS消息配置 ###
+jms.url=failover:(tcp\://activemq\:61618)?startupMaxReconnectAttempts=8
+jms.userName=admin
+jms.password=iomsserver
+jms.cacheSize=30
+
+jms.timeout=3
+command.timeout=30
+
+
+#### FAST DFS ########
+connect_timeout = 2
+network_timeout = 30
+charset = ISO8859-1
+http.tracker_http_port = 8888
+http.anti_steal_token = no
+
+tracker_server =fastdfs:22122
+
+default_group_name=group1
+
+## 病毒查杀 ###
+virus.scan.server=clamav
+virus.scan.port=3310
+virus.scan.timeout=600000
+
+## 远程打印日志 ##
+logstash.remote.addr=192.168.35.112:4569
+
+### redis配置 ###
+redis.ip=redis
+redis.port=6379
+redis.requirepass=123456
+
+### 用于单元测试 ###
+ums.controller.test.url=
+#terminal.controller.test.url=
+monitor.controller.test.url=
+#report.controller.test.url=
+### 360安全检测 ###
+web.scan.auth=27a58b0e213343f4882a38befbd53084
+
+##处理心跳任务
+hearbeat.handle.scheduling=0/10 * * * * ?
+
+##app白名单地址不校验用户信息
+app.urls.whitelist=/app/auth,/app/login
+
+##shiro 权限地址控制
+shiro.filter.definitions=/resources/**=anon,/app/**=anon,/login=anon,/logout=anon,/proxy/**=anon,/event=anon,/terminalVersion/**=anon,/webscan_360_cn.html=anon,/**=authc
+
+## 微信APPID 需要跟Monitor配置文件中一致
+wechat.appid=wxec754c28c2bffaae
+wechat.secret=9aa09c31e17854a80f03b688d876b2dc
+
+## openid验证地址
+#wechat.auth.url=http://cuto2016.iok.la/ioms/app/auth
+wechat.auth.url=http://k1i9109012.imwork.net:24895/ioms/app/auth
+
+
+## H5首页地址
+#wechat.index.url=http://cuto2016.iok.la/ioms/index
+wechat.index.url=http://k1i9109012.imwork.net:24895/ioms/index
+
+## 终端程序升级包中排除文件(多个文件以逗号隔开)
+client.except.file=ext/IOMS.db,ext/dll/cash/GWI_Cash_Module.db,**/GWI.db
+
+## 驱动平台升级包中排除文件(多个文件以逗号隔开)
+device.except.file=**/GWI_Cash_Module.db,**/IOMS.db
+
+## 交易明细报表业务查询框排除业务的类型(字典dic_item_value值)，多个","隔开
+terTransaction.exclude.busi.types=17,9702,98,1800,10
+
+## 验签白名单 多个","隔开
+sign.validate.urls.whitelist=/proxy/network/test,/proxy/rpt/upload,/proxy/uploadLogFromProxy,/proxy/getOrgCodeByTerminalCode,/proxy/terConfigFromProxy,/proxy/fileReceive,/proxy/dicDownload,/proxy/dealTerTransactionDetail,/proxy/alarm/notify,/proxy/downloadFile,/proxy/getOrgInfoMd5
+
+## 验签Maps
+sign.key.map={\"ioms\":\"7e15c8ca\"}

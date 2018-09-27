@@ -1,0 +1,49 @@
+### jdbc     ###
+jdbc.driverClassName=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://mysql:3306/o2o_ioms?useUnicode=true&characterEncoding=utf-8
+jdbc.username=gwi
+jdbc.password=123456
+
+### redis配置 ###
+redis.ip=redis
+redis.port=6379
+redis.requirepass=123456
+
+### email config ###
+spring.mail.host=smtp.163.com
+spring.mail.username=guotao2358
+spring.mail.password=gwi123456
+spring.mail.port=25
+spring.mail.defaul.from=guotao2358@163.com
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.timeout=3000
+
+### rabbitMq ###
+spring.rabbitmq.host=rabbitmq
+spring.rabbitmq.port=5672
+spring.rabbitmq.username=smartops
+spring.rabbitmq.password=greatwall
+
+#### 配置信息 #####
+http.reqTimeout=30000
+user.status.ok=1
+user.status.frozen=2
+user.status.lock=3
+is.delete=1
+is.delete.not=2
+terminal.busi.is.use=1
+terminal.busi.is.stop=2
+dic.pay.type=01
+terConfig.rootpath=/home/ioms/ter_config
+## 远程打印日志 ##
+logstash.remote.addr=192.168.35.112:4569
+
+
+#### FAST DFS ########
+connect_timeout = 2
+network_timeout = 30
+charset = ISO8859-1
+http.tracker_http_port = 8888
+http.anti_steal_token = no
+tracker_server =fastdfs:22122
+default_group_name=group1

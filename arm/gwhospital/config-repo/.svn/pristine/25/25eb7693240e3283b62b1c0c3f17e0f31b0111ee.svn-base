@@ -1,0 +1,23 @@
+### JMS消息配置 ####
+jms.url=failover:(tcp\://activemq\:61618)?startupMaxReconnectAttempts=8
+jms.userName=admin
+jms.password=iomsserver
+jms.cacheSize=30
+
+### 渠道名称 ####
+jms.queue=ioms_mq
+jms.timeout=3
+command.timeout=30
+
+### rabbitMq ##
+spring.rabbitmq.host=rabbitmq
+spring.rabbitmq.port=5672
+spring.rabbitmq.username=smartops
+spring.rabbitmq.password=greatwall
+### redis配置 ###
+redis.ip=redis
+redis.port=6379
+redis.requirepass=123456
+###单元测试###
+monitor.controller.test.url=
+ums.controller.test.url=

@@ -4,12 +4,14 @@ metadata:
   name: wordpress-pvc
   namespace: app-wordpress
 spec:
+  selector:
+    matchLabels:
+      pv: wordpress-pv
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
       storage: 20Gi
-  storageClassName: nfs
 ---
 apiVersion: v1
 kind: Service
