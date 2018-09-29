@@ -28,7 +28,7 @@ spec:
         app: ui
     spec:
       containers:
-      - image: ui:1.0
+      - image: ui:1.1
         name: ui
         env:
         - name: SERVER
