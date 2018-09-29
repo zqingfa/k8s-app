@@ -11,7 +11,26 @@ spec:
   capacity:
     storage: 20Gi
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: nfs
-  nfs:
+  cephfs:
+    monitors:
+      - 172.16.16.10
     path: /data/gwhospital/08mysql/mysql
-    server: k8s-node3
+    user: admin
+    secretRef:
+      name: ceph-secret
+    readOnly: false
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mysql-pvc
+  namespace: gwhospital
+spec:
+  accessModes:
+  - ReadWriteMany
+  selector:
+    matchLabels:
+      pv: mysql-pv
+  resources:
+    requests:
+      storage: 20Gi

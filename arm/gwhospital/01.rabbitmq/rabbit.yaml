@@ -1,20 +1,4 @@
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: rabbitmq-pvc
-  namespace: gwhospital
-spec:
-  accessModes:
-  - ReadWriteMany
-  selector:
-    matchLabels:
-      pv: rabbitmq-pv
-  resources:
-    requests:
-      storage: 20Gi
-  storageClassName: nfs
 
----
 apiVersion: v1
 kind: Service
 metadata:

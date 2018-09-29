@@ -1,17 +1,36 @@
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: redis-pv
-  namespace: gwhospital
-  labels:
-    pv: redis-pv
-spec:
-  accessModes:
-  - ReadWriteMany
-  capacity:
-    storage: 20Gi
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: nfs
-  nfs:
-    path: /data/gwhospital/06redis/redis
-    server: k8s-node3
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: redis-pv
+#   namespace: gwhospital
+#   labels:
+#     pv: redis-pv
+# spec:
+#   accessModes:
+#   - ReadWriteMany
+#   capacity:
+#     storage: 20Gi
+#   persistentVolumeReclaimPolicy: Retain
+#   cephfs:
+#     monitors:
+#       - 172.16.16.10
+#     path: /gwhospital/06redis/
+#     user: admin
+#     secretRef:
+#       name: ceph-secret
+#     readOnly: false
+# ---
+# kind: PersistentVolumeClaim
+# apiVersion: v1
+# metadata:
+#   name: redis-pvc
+#   namespace: gwhospital
+# spec:
+#   accessModes:
+#   - ReadWriteMany
+#   selector:
+#     matchLabels:
+#       pv: redis-pv
+#   resources:
+#     requests:
+#       storage: 20Gi

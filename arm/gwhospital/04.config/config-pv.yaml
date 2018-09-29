@@ -11,7 +11,26 @@ spec:
   capacity:
     storage: 20Gi
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: nfs
-  nfs:
-    path: /data/gwhospital/04config/data
-    server: k8s-node3
+  cephfs:
+    monitors:
+      - 172.16.16.10
+    path: /gwhospital/04config/ter_config
+    user: admin
+    secretRef:
+      name: ceph-secret
+    readOnly: false
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: config-pvc
+  namespace: gwhospital
+spec:
+  accessModes:
+  - ReadWriteMany
+  selector:
+    matchLabels:
+      pv: config-pv
+  resources:
+    requests:
+      storage: 20Gi

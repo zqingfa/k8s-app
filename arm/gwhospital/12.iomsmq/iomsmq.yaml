@@ -1,18 +1,3 @@
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: iomsmq-pvc
-  namespace: gwhospital
-spec:
-  accessModes:
-  - ReadWriteMany
-  selector:
-    matchLabels:
-      pv: iomsmq-pv
-  resources:
-    requests:
-      storage: 20Gi
-  storageClassName: nfs
 
 ---
 apiVersion: v1

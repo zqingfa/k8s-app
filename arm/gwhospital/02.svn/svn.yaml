@@ -1,18 +1,4 @@
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: svn-pvc
-  namespace: gwhospital
-spec:
-  accessModes:
-  - ReadWriteMany
-  selector:
-    matchLabels:
-      pv: svn-pv
-  resources:
-    requests:
-      storage: 20Gi
-  storageClassName: nfs
+
 ---
 apiVersion: v1
 kind: Service

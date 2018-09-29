@@ -1,18 +1,3 @@
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: redis-pvc
-  namespace: gwhospital
-spec:
-  accessModes:
-  - ReadWriteMany
-  selector:
-    matchLabels:
-      pv: redis-pv
-  resources:
-    requests:
-      storage: 20Gi
-  storageClassName: nfs
 
 ---
 apiVersion: v1

@@ -1,18 +1,3 @@
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: fastdfs-pvc
-  namespace: gwhospital
-spec:
-  accessModes:
-  - ReadWriteMany
-  selector:
-    matchLabels:
-      pv: fastdfs-pv
-  resources:
-    requests:
-      storage: 50Gi
-  storageClassName: nfs
 
 ---
 apiVersion: v1

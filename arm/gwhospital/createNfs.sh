@@ -1,16 +1,16 @@
 #!/bin/bash
-mkdir -p /data/gwhospital/01rabbitmq/rabbitmq
-mkdir -p /data/gwhospital/02svn/svn
-mkdir -p /data/gwhospital/03discovery/data
-mkdir -p /data/gwhospital/04config/data
-mkdir -p /data/gwhospital/05fastdfs/fastdfs
-mkdir -p /data/gwhospital/06redis/redis
-mkdir -p /data/gwhospital/07activemq/activemq
-mkdir -p /data/gwhospital/08mysql/mysql
-mkdir -p /data/gwhospital/09iomsgateway/data
-mkdir -p /data/gwhospital/10iomsums/data
-mkdir -p /data/gwhospital/11iomsmonitor/data
-mkdir -p /data/gwhospital/12iomsmq/data
-mkdir -p /data/gwhospital/13ui/www
+mkdir -p /gwhospital/01rabbitmq/mnesia
+mkdir -p /gwhospital/02svn/svn
+mkdir -p /gwhospital/03discovery/data
+mkdir -p /gwhospital/04config/ter_config
+mkdir -p /gwhospital/05fastdfs/fastdfs
+mkdir -p /gwhospital/06redis/redis
+mkdir -p /gwhospital/07activemq/activemq
+mkdir -p /gwhospital/08mysql/mysql
+mkdir -p /gwhospital/09iomsgateway/data
+mkdir -p /gwhospital/10iomsums/data
+mkdir -p /gwhospital/11iomsmonitor/data
+mkdir -p /gwhospital/12iomsmq/data
+mkdir -p /gwhospital/13ui/www
 
-chmod 777 -R /data/gwhospital
+#chmod 777 -R /gwhospital
