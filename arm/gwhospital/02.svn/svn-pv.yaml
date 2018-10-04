@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   cephfs:
     monitors:
-      - 172.16.16.10
+      - k8s-master
     path: /gwhospital/02svn/svn
     user: admin
     secretRef:

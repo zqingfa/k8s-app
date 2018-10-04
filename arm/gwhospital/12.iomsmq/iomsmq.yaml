@@ -39,8 +39,8 @@ spec:
         - containerPort: 8083
           name: iomsmq
         volumeMounts:
-        - name: iomsmq-workdir
-          mountPath: /data
+#        - name: iomsmq-workdir
+#          mountPath: /data
         - name: iomsmq-localtime
           mountPath: /etc/localtime
           readOnly: true
@@ -54,7 +54,7 @@ spec:
       - hostPath:
           path: /etc/timezone
         name: iomsmq-timezone
-      - name: iomsmq-workdir
-        persistentVolumeClaim:
-          claimName: iomsmq-pvc
+#      - name: iomsmq-workdir
+#        persistentVolumeClaim:
+#          claimName: iomsmq-pvc
 

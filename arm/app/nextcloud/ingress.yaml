@@ -1,17 +1,21 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: ingress-wp
-  namespace: app-wordpress
+  name: storage-ingress
+  namespace: app-storage
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
 spec:
+  tls:
+  - hosts:
+    - storage.gwcloud.tk
+    secretName: ingress-secret
   rules:
-  - host: wp.gwcloud.tk
+  - host: storage.gwcloud.tk
     http:
       paths:
       - backend:
-          serviceName: wordpress
+          serviceName: storage
           servicePort: 80

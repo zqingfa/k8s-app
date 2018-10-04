@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: storage-ingress
+  namespace: app-storage
+spec:
+  tls:
+  - hosts:
+    - storage.gwcloud.tk
+    secretName: ingress-secret
+  rules:
+  - host: storage.gwcloud.tk
+    http:
+      paths:
+      - backend:
+          serviceName: storage
+          servicePort: 80

@@ -13,8 +13,8 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   cephfs:
     monitors:
-      - 172.16.16.10
-    path: /data/gwhospital/08mysql/mysql
+      - k8s-master
+    path: /gwhospital/08mysql/mysql
     user: admin
     secretRef:
       name: ceph-secret

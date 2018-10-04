@@ -1,17 +1,4 @@
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: mariadb-pvc
-  namespace: app-storage
-spec:
-  selector:
-    matchLabels:
-      app-storage: mariadb-pv 
-  accessModes:
-  - ReadWriteMany
-  resources:
-    requests:
-      storage: 20Gi
+
 ---
 
 apiVersion: v1

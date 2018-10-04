@@ -1,3 +1,18 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mariadb-pvc
+  namespace: app-wordpress
+spec:
+  selector:
+    matchLabels:
+      app-wordpress: mariadb-pv
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+---
 #ceph
 apiVersion: v1
 kind: PersistentVolume
@@ -5,7 +20,7 @@ metadata:
   name: mariadb-pv
   namespace: app-wordpress
   labels:
-    pv: mariadb-pv  
+    app-wordpress: mariadb-pv  
 spec:
   capacity:
     storage: 20Gi

@@ -38,8 +38,8 @@ spec:
         - containerPort: 8099
           name: iomsgateway
         volumeMounts:
-        - name: iomsgateway-workdir
-          mountPath: /data
+#        - name: iomsgateway-workdir
+#          mountPath: /data
         - name: iomsgateway-localtime
           mountPath: /etc/localtime
           readOnly: true
@@ -53,7 +53,7 @@ spec:
       - hostPath:
           path: /etc/timezone
         name: iomsgateway-timezone
-      - name: iomsgateway-workdir
-        persistentVolumeClaim:
-          claimName: iomsgateway-pvc
+#      - name: iomsgateway-workdir
+#        persistentVolumeClaim:
+#          claimName: iomsgateway-pvc
 

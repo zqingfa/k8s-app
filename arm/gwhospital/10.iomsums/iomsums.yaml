@@ -38,8 +38,8 @@ spec:
         - containerPort: 8081
           name: iomsums
         volumeMounts:
-        - name: iomsums-workdir
-          mountPath: /data
+#        - name: iomsums-workdir
+#          mountPath: /data
         - name: iomsums-localtime
           mountPath: /etc/localtime
           readOnly: true
@@ -53,7 +53,7 @@ spec:
       - hostPath:
           path: /etc/timezone
         name: iomsums-timezone
-      - name: iomsums-workdir
-        persistentVolumeClaim:
-          claimName: iomsums-pvc
+#      - name: iomsums-workdir
+#        persistentVolumeClaim:
+ #         claimName: iomsums-pvc
 

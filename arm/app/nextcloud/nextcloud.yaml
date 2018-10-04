@@ -1,18 +1,4 @@
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: storage-pvc
-  namespace: app-storage
-spec:
-  selector:
-    matchLabels:
-      app-storage: storage-pv
-  accessModes:
-  - ReadWriteMany
-  resources:
-    requests:
-      storage: 512Gi
+
 ---
 apiVersion: v1
 kind: Service

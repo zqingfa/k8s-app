@@ -35,8 +35,8 @@ spec:
         - containerPort: 8788
           name: discovery
         volumeMounts:
-        - name: discovery-workdir
-          mountPath: /data
+#        - name: discovery-workdir
+#          mountPath: /data
         - name: discovery-localtime
           mountPath: /etc/localtime
           readOnly: true
@@ -50,6 +50,6 @@ spec:
       - hostPath:
           path: /etc/timezone
         name: discovery-timezone
-      - name: discovery-workdir
-        persistentVolumeClaim:
-          claimName: discovery-pvc
+#      - name: discovery-workdir
+#        persistentVolumeClaim:
+#          claimName: discovery-pvc

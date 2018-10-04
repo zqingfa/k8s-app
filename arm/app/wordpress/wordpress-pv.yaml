@@ -1,3 +1,4 @@
+---
 # ceph
 apiVersion: v1
 kind: PersistentVolume
@@ -5,7 +6,7 @@ metadata:
   name: wordpress-pv
   namespace: app-wordpress
   labels:
-    pv: wordpress-pv  
+    app-wordpress: wordpress-pv  
 spec:
   capacity:
     storage: 20Gi
@@ -20,3 +21,18 @@ spec:
       name: ceph-secret
     readOnly: false
   persistentVolumeReclaimPolicy: Retain
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: wordpress-pvc
+  namespace: app-wordpress
+spec:
+  selector:
+    matchLabels:
+      app-wordpress: wordpress-pv
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi

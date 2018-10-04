@@ -1,17 +1,17 @@
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: mariadb-pvc
-  namespace: app-wordpress
-spec:
-  selector:
-    matchLabels:
-      pv: mariadb-pv
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 20Gi
+# kind: PersistentVolumeClaim
+# apiVersion: v1
+# metadata:
+#   name: mariadb-pvc
+#   namespace: app-wordpress
+# spec:
+#   accessModes:
+#   - ReadWriteMany
+#   resources:
+#     requests:
+#       storage: 20Gi
+#   storageClassName: nfs
+
+
 
 ---
 apiVersion: v1

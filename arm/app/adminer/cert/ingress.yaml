@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: adminer-ingress
+  namespace: app-adminer
+spec:
+  tls:
+  - hosts:
+    - adminer.gwcloud.tk
+    secretName: ingress-secret
+  rules:
+  - host: adminer.gwcloud.tk
+    http:
+      paths:
+      - backend:
+          serviceName: adminer
+          servicePort: 8080

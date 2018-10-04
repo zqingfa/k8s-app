@@ -39,8 +39,8 @@ spec:
         - containerPort: 8084
           name: iomsmonitor
         volumeMounts:
-        - name: iomsmonitor-workdir
-          mountPath: /data
+#        - name: iomsmonitor-workdir
+#          mountPath: /data
         - name: iomsmonitor-localtime
           mountPath: /etc/localtime
           readOnly: true
@@ -54,7 +54,7 @@ spec:
       - hostPath:
           path: /etc/timezone
         name: iomsmonitor-timezone
-      - name: iomsmonitor-workdir
-        persistentVolumeClaim:
-          claimName: iomsmonitor-pvc
+#      - name: iomsmonitor-workdir
+#        persistentVolumeClaim:
+ #         claimName: iomsmonitor-pvc
 
